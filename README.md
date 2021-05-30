@@ -1,4 +1,4 @@
-# emojipasta-generator
+# Emojipasta-Generator
 Surround text with relevant emojis.
 
 Sort of like what [u/EmojifierBot](https://www.reddit.com/user/EmojifierBot) does.
