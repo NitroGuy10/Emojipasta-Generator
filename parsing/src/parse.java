@@ -26,9 +26,7 @@ public class parse
 		final long startTime = System.currentTimeMillis();
 		int numDataStrings = 0;
 
-		// parseData("Martha\\ud83d\\ude01was\\ud83e\\udd70an\\ud83d\\ude43average\\ud83d\\udc15dog.", emojiMap);
-		// parseData("Martha \\ud83d\\ude01", emojiMap);
-		
+
 		for (File inputFile : inputDirectory.listFiles())
 		{
 			if (inputFile.getName().endsWith(".json"))
@@ -50,11 +48,20 @@ public class parse
 
 		System.out.println("Parsed " + numDataStrings + " data strings in " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds.");
 		// System.out.println(emojiMap);
-		
-		
-		
-		
-		
+
+
+		Scanner console = new Scanner(System.in);
+
+		System.out.println("Enter some words separated by spaces. Emoji will be added when applicable. Type \"exit\" to quit.");
+		String userInput = console.nextLine();
+		while (!userInput.equalsIgnoreCase("exit"))
+		{
+			System.out.println(addEmoji(userInput.toLowerCase(), emojiMap));
+			userInput = console.nextLine();
+		}
+
+		console.close();
+
 		// System.out.println(Pattern.matches("\\\\u[0-9a-fA-F]{4}", "\\uA3f7"));
 
 		// System.out.println(EmojiParser.parseToAliases("Here is a boy: \uD83D\uDC66\uD83C\uDFFF!", FitzpatrickAction.REMOVE));
@@ -91,7 +98,7 @@ public class parse
 			{
 				if (!endsWithWhitespace(lastToken))
 				{
-					// To signify that a new token should be created after emojis are added to the HashMap
+					// To signify that a new token should be created after emoji are added to the HashMap
 					lastToken += " ";
 				}
 				System.out.println("Emoji Unicode piece found: " + potentialEmoji);
@@ -158,7 +165,7 @@ public class parse
 
 		// rawData will contain sequences like "\ud83d" in PLAIN TEXT characters,
 		// not the actual unicode characters
-		
+
 		/*
 		String fixedData = "";
 		Scanner unicodeReader = new Scanner(rawData);
@@ -185,8 +192,36 @@ public class parse
 
 		unicodeReader.close();
 		return EmojiParser.parseToUnicode(fixedData);
-		*/
+		 */
 		return rawData;
+	}
+
+	public static String addEmoji (String originalStr, HashMap<String, HashMap<String, Integer>> emojiMap)
+	{
+		String outputStr = "";
+		for (String word : originalStr.split(" "))
+		{
+			outputStr += word;
+
+			if (emojiMap.containsKey(word))
+			{
+				int numEmoji = 1;
+				if ((int) (Math.random() * 5) == 0)
+				{
+					numEmoji = 2;
+				}
+
+				for (int i = 0; i < numEmoji; i++)
+				{
+					outputStr += emojiMap.get(word).keySet().toArray()[(int) (Math.random() * emojiMap.get(word).size())];
+				}
+			}
+			else
+			{
+				outputStr += " ";
+			}
+		}
+		return outputStr;
 	}
 
 	public static char getCharFromUnicodeSequence (String sequence)
