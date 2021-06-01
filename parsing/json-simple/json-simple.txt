@@ -1,2 +1,0 @@
-https://github.com/fangyidong/json-simple
-https://code.google.com/archive/p/json-simple/

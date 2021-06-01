@@ -1,5 +1,3 @@
-import org.json.simple.JSONObject;
-
 import com.vdurmont.emoji.EmojiManager;
 import com.vdurmont.emoji.EmojiParser;
 import com.vdurmont.emoji.EmojiParser.FitzpatrickAction;
